@@ -765,9 +765,9 @@ bool CheckOptionsBus(ProgramOptions& opt) {
      busopt.bc.push_back(BUSOptionSubstr(0,0,7)); // first 7 bp are barcode
     } else if (opt.technology == "pe35bp") {
      busopt.nfiles = 2; // paired end read
-     busopt.umi = BUSOptionSubstr(1,0,9); // first 9 bp of R2 are the umi
-     busopt.seq = BUSOptionSubstr(1,9,36); // 9-150bp of R2 are transcript
-     busopt.bc.push_back(BUSOptionSubstr(0,0,7)); // first 7 bp of R1 are barcode
+     busopt.umi = BUSOptionSubstr(1,0,9); // first 10 bp of R2 are the umi
+     busopt.seq = BUSOptionSubstr(1,9,36); // 11-36bp of R2 are transcript
+     busopt.bc.push_back(BUSOptionSubstr(0,0,6)); // first 7 bp of R1 are barcode
     } else {
       cerr << "Unknown technology: " << opt.technology << endl;
       ret = false;
