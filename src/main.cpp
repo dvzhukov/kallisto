@@ -536,6 +536,8 @@ void ListSingleCellTechnologies() {
   << "inDrops          inDrops" << endl
   << "SCRBSeq          SCRB-Seq" << endl
   << "SureCell         SureCell for ddSEQ" << endl
+  << "se100bp           se100bp" << endl
+  << "pe150bp           pe150bp" << endl
   << endl;
  }
 
@@ -756,6 +758,16 @@ bool CheckOptionsBus(ProgramOptions& opt) {
       busopt.seq = BUSOptionSubstr(1,0,0);
       busopt.umi = BUSOptionSubstr(0,6,16);
       busopt.bc.push_back(BUSOptionSubstr(0,0,6));
+    } else if (opt.technology == "se100bp") {
+     busopt.nfiles = 1; // single read
+     busopt.umi = BUSOptionSubstr(0,0,7); // we made the umi same as barcode
+     busopt.seq = BUSOptionSubstr(0,7,100); // sequence is 7-100bp
+     busopt.bc.push_back(BUSOptionSubstr(0,0,7)); // first 7 bp are barcode
+    } else if (opt.technology == "pe150bp") {
+     busopt.nfiles = 2; // paired end read
+     busopt.umi = BUSOptionSubstr(1,0,9); // first 9 bp of R2 are the umi
+     busopt.seq = BUSOptionSubstr(1,9,150); // 9-150bp of R2 are transcript
+     busopt.bc.push_back(BUSOptionSubstr(0,0,7)); // first 7 bp of R1 are barcode
     } else {
       cerr << "Unknown technology: " << opt.technology << endl;
       ret = false;
